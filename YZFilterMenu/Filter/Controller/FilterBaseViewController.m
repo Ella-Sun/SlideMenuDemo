@@ -16,9 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    UIBarButtonItem *backBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back_red"] style:UIBarButtonItemStylePlain target:self action:@selector(navBackBarAction:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
+//     Do any additional setup after loading the view.
+//    UIBarButtonItem *backBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back_red"] style:UIBarButtonItemStylePlain target:self action:@selector(navBackBarAction:)];
+//    self.navigationItem.leftBarButtonItem = backBarItem;
 }
 
 - (void)navBackBarAction:(UINavigationItem *)bar{

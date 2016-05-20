@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) NSArray * data;
 
-@property (nonatomic, strong) NSArray * selectedData;
+@property (nonatomic, copy) NSString *subTitle;
 
 @property (nonatomic, weak) id<FilterSelectedDelegate> delegate;
 

@@ -67,13 +67,6 @@
     return _subTextTitles;
 }
 
-//- (NSMutableDictionary *)selectTexts {
-//    if (!_selectTexts) {
-//        _selectTexts = [NSMutableDictionary dictionary];
-//    }
-//    return _selectTexts;
-//}
-
 - (NSArray *)arrTitle {
     if (!_arrTitle) {
         _arrTitle = @[@[@"收支方向"],@[@"全部公司",@"全部银行",@"账户性质",@"账户模式"]];
@@ -88,11 +81,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-/* 不好用
- - (void)viewWillAppear:(BOOL)animated {
- [super viewWillAppear:animated];
- }
- */
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -146,8 +134,6 @@
     if(self.screeningNavBlock){ // 点击了返回按钮，清空所有筛选条件
         self.screeningNavBlock(nil,nil,nil,nil,nil);
     }
-//    if(self.basicBlock)
-//        self.basicBlock();
 }
 
 /**
@@ -269,7 +255,7 @@
     }
     //记录点击状态
     
-    
+    svc.subTitle = title;
     svc.data = [self.subTextTitles valueForKey:title];
     [self.navigationController pushViewController:svc animated:YES];
 }
