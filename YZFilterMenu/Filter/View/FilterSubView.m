@@ -18,19 +18,18 @@
 
 @property (nonatomic, strong) UITableView *subTableView;
 
-//@property (nonatomic, strong) NSMutableArray * allSelBtns;
-@property (nonatomic, strong) UIButton * leftBtn;
+@property (nonatomic, strong) NSMutableArray * allSelBtns;
 
 @end
 
 @implementation FilterSubView
 
-//- (NSMutableArray *)allSelBtns {
-//    if (!_allSelBtns) {
-//        _allSelBtns = [NSMutableArray array];
-//    }
-//    return _allSelBtns;
-//}
+- (NSMutableArray *)allSelBtns {
+    if (!_allSelBtns) {
+        _allSelBtns = [NSMutableArray array];
+    }
+    return _allSelBtns;
+}
 
 - (NSMutableArray *)selectedRows {
     if (!_selectedRows) {
@@ -115,8 +114,8 @@
         
         //改变全选按钮的状态
         BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;
-//        UIButton *leftBtn = (UIButton *)weakSelf.allSelBtns[indexPath.section];
-        weakSelf.leftBtn.selected = isSelectedAll;
+        UIButton *leftBtn = (UIButton *)weakSelf.allSelBtns[indexPath.section];
+        leftBtn.selected = isSelectedAll;
         sectionClose[indexPath.section] = isSelectedAll;
     };
     
@@ -170,8 +169,9 @@
     BOOL isSelected = sectionClose[section];
     selectBtn.selected = isSelected;
     
-//    [self.allSelBtns addObject:selectBtn];
-    self.leftBtn = selectBtn;
+    [self.allSelBtns removeAllObjects];
+    [self.allSelBtns addObject:selectBtn];
+    
     [viewBtn addSubview:selectBtn];
     
     //标题
