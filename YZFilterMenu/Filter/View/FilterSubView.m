@@ -18,9 +18,19 @@
 
 @property (nonatomic, strong) UITableView *subTableView;
 
+//@property (nonatomic, strong) NSMutableArray * allSelBtns;
+@property (nonatomic, strong) UIButton * leftBtn;
+
 @end
 
 @implementation FilterSubView
+
+//- (NSMutableArray *)allSelBtns {
+//    if (!_allSelBtns) {
+//        _allSelBtns = [NSMutableArray array];
+//    }
+//    return _allSelBtns;
+//}
 
 - (NSMutableArray *)selectedRows {
     if (!_selectedRows) {
@@ -87,20 +97,27 @@
     
     leftLabel.text = titleText;
     rightBtn.selected = isSelected;
+    NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
     if (rightBtn.selected) {
-        NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
         [self.selectedRows addObject:indexStr];
+    } else {
+        [self.selectedRows removeObject:indexStr];
     }
     __weak typeof(self) weakSelf = self;
     cell.cellClickBlock = ^{
         
         rightBtn.selected = !rightBtn.selected;
-        NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
         if (rightBtn.selected) {
             [weakSelf.selectedRows addObject:indexStr];
         } else {
             [weakSelf.selectedRows removeObject:indexStr];
         }
+        
+        //改变全选按钮的状态
+        BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;
+//        UIButton *leftBtn = (UIButton *)weakSelf.allSelBtns[indexPath.section];
+        weakSelf.leftBtn.selected = isSelectedAll;
+        sectionClose[indexPath.section] = isSelectedAll;
     };
     
     leftLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -136,7 +153,7 @@
     
     CGFloat arrowWidth = 30;
     CGFloat arrowXpiex = screenWidth - spaceMargin - arrowWidth;
-    CGFloat arrowYpiex = (tempHeight - arrowWidth) * 0.5;
+    CGFloat arrowYpiex = (tempHeight - arrowWidth)*0.5;
     
     UIButton *viewBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     viewBtn.tag = 400 + section;
@@ -152,6 +169,9 @@
     [selectBtn addTarget:self action:@selector(allItembtnClick:) forControlEvents:UIControlEventTouchUpInside];
     BOOL isSelected = sectionClose[section];
     selectBtn.selected = isSelected;
+    
+//    [self.allSelBtns addObject:selectBtn];
+    self.leftBtn = selectBtn;
     [viewBtn addSubview:selectBtn];
     
     //标题
@@ -168,10 +188,17 @@
     arrowView.frame = CGRectMake(arrowXpiex, arrowYpiex, arrowWidth, arrowWidth);
     arrowView.tag = 300 + section;
     arrowView.image = [UIImage imageNamed:@"btn_back_red"];
+    CGFloat rotationProp = -M_PI/2;
+    if (close[0]) {
+        rotationProp = M_PI;
+    }
+    CGAffineTransform rotationAf = CGAffineTransformMakeRotation(rotationProp);
+    arrowView.transform = rotationAf;
     [viewBtn addSubview:arrowView];
     
     return viewBtn;
 }
+
 
 //设置组的头视图的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -207,17 +234,14 @@
  */
 - (void)unfoldAllCells:(UIButton *)sender {
     
-    //取得点击的组
     NSInteger section = sender.tag - 400;
+    //取得点击的组
     close[section] = !close[section];
     
     //刷新制定的组
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
     [self.subTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-    
-    UIImageView *arrowView = [sender viewWithTag:(300+section)];
-    //翻转
-    
+
 }
 
 
