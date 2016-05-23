@@ -11,6 +11,7 @@
 #import "FilterSubMenuViewController.h"
 //#import "FilterFirstView.h"
 #import "FilterSelectModel.h"
+#import "FilterMenuView.h"
 
 #define kMenuLeftSpace 100
 //屏幕高度
@@ -18,10 +19,10 @@
 //屏幕宽
 #define kScreenWidth CGRectGetWidth([UIScreen mainScreen].bounds)
 
-@interface FilterMenuViewController ()<UITableViewDataSource,UITableViewDelegate,FilterSelectedDelegate>
+@interface FilterMenuViewController ()<UITableViewDelegate,FilterSelectedDelegate>
 
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) FilterMenuView *filterMenu;
 
 /**
  *  默认显示筛选项
@@ -78,10 +79,12 @@
     UIBarButtonItem *sureBarItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleDone target:self action:@selector(sureAction)];
     
     self.navigationItem.rightBarButtonItem = sureBarItem;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, kScreenWidth-kMenuLeftSpace, kScreenHeight) style:UITableViewStyleGrouped];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
+    
+    CGRect menuFrame = CGRectMake(0,0, kScreenWidth-kMenuLeftSpace, kScreenHeight);
+    self.filterMenu = [[FilterMenuView alloc] initWithFrame:menuFrame];
+    self.filterMenu.arrTitle = self.arrTitle;
+    self.filterMenu.menuTableView.delegate = self;
+    [self.view addSubview:self.filterMenu];
 }
 
 
@@ -111,7 +114,8 @@
      *  所有选项恢复默认，即全选
      */
     [self.subTextTitles removeAllObjects];
-    [self.tableView reloadData];
+    self.filterMenu.allData = self.subTextTitles;
+    [self.filterMenu.menuTableView reloadData];
     
     if(self.screeningNavBlock){ // 点击了返回按钮，清空所有筛选条件
         self.screeningNavBlock(nil,nil,nil,nil,nil);
@@ -141,51 +145,7 @@
     return indexAry;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return self.arrTitle.count;
-}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    NSArray *arr = self.arrTitle[section];
-    return arr.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
-    if(!cell){
-        
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    NSArray *arr = self.arrTitle[indexPath.section];
-    NSString *title = arr[indexPath.row];
-    cell.textLabel.text = title;
-    
-    NSString *detailText = @"";
-    if (self.subTextTitles.count == 0) {
-        cell.detailTextLabel.text = detailText;
-        return cell;
-    }
-    NSArray *detailAry = [self.subTextTitles valueForKey:title];
-    for (FilterSelectModel *model in detailAry) {
-        if (model.selected) {
-            detailText = [detailText stringByAppendingFormat:@",%@",model.title];
-        }
-    }
-    if (detailText.length > 0) {
-        detailText = [detailText stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
-    }
-    
-    
-    cell.detailTextLabel.text = detailText;
-    
-    return cell;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
@@ -268,7 +228,8 @@
         [self insertModelDataWithSubTitleAry:childAry
                                orSelectedAry:_keepTradeDirIDs
                                andTotleTitle:@"收支方向"];
-        [self.tableView reloadData];
+        self.filterMenu.allData = self.subTextTitles;
+        [self.filterMenu.menuTableView reloadData];
     }
 }
 
@@ -323,11 +284,6 @@
     
     //直接点击返回 应清除
     if (rows.count == 0) {
-//        NSInteger i = 0;
-//        for (FilterSelectModel *model in childAry) {
-//            model.selected = NO;
-//            [changeTexts replaceObjectAtIndex:i++ withObject:model];
-//        }
         return;
     } else {
         //未被点击设为NO
@@ -335,24 +291,18 @@
         for (FilterSelectModel *model in childAry) {
             NSString *indexStr = [NSString stringWithFormat:@"%ld",index];
             if ([rows containsObject:indexStr]) {
-                [changeTexts addObject:model];
+//                [changeTexts addObject:model];
             } else {
                 model.selected = NO;
                 [changeTexts replaceObjectAtIndex:index withObject:model];
             }
             index++;
         }
-        //存点击的model
-//        for (NSString *indexSre in rows) {
-//            NSInteger index = [indexSre integerValue];
-//            FilterSelectModel *model = childAry[index];
-//            model.selected = YES;
-//            [changeTexts replaceObjectAtIndex:index withObject:model];
-//        }
     }
     //改变对应model的点击状态
     [self.subTextTitles setValue:changeTexts forKey:title];
-    [self.tableView reloadData];
+    self.filterMenu.allData = self.subTextTitles;
+    [self.filterMenu.menuTableView reloadData];
     
     if ([title isEqualToString:@"收支方向"]) {
         _keepTradeDirIDs = rows;

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterMenuView : UIView<UITableViewDataSource, UITableViewDelegate>
+@interface FilterMenuView : UIView<UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *menuTableView;
+
+@property (nonatomic, strong) NSArray *arrTitle;
+
+@property (nonatomic, strong) NSMutableDictionary * allData;
 
 @end
