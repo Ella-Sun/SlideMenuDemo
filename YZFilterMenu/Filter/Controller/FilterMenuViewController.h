@@ -43,13 +43,10 @@ typedef void (^FilterBasicBlock)();
 //确定block
 @property (nonatomic, copy) void (^screeningBlock)(NSArray *,NSArray *,NSArray *,NSArray *,NSArray *);
 //清空block
-//@property (nonatomic, copy) void (^screeningDeleteBlock)();
+@property (nonatomic, copy) void (^screeningDeleteBlock)();
 //点击了导航栏上的block
-@property (nonatomic, copy) void (^screeningNavBlock)(NSArray *,NSArray *,NSArray *,NSArray *,NSArray *);
+//@property (nonatomic, copy) void (^screeningNavBlock)(NSArray *,NSArray *,NSArray *,NSArray *,NSArray *);
 
-
-//判断是否点击了确定按钮（如果选完条件，但直接点击导航栏的返回按钮则不保存筛选条件）
-//@property (nonatomic, assign) BOOL isTapDisMiss;
 
 - (void)setSureBarItemHandle:(FilterBasicBlock)basicBlock;
 

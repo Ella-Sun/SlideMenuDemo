@@ -53,6 +53,7 @@
 - (NSArray *)arrTitle {
     if (!_arrTitle) {
         _arrTitle = @[@[@"收支方向"],@[@"全部公司",@"全部银行",@"账户性质",@"账户模式"]];
+        
     }
     return _arrTitle;
 }
@@ -101,14 +102,19 @@
      *  所有选项恢复默认，即全选
      */
     [self.subTextTitles removeAllObjects];
+    _keepTradeDirIDs = nil;
+    _keepComIDs = nil;
+    _keepBanksIDs = nil;
+    _keepCountPropIDs = nil;
+    _keepCountModelIDs = nil;
     
     self.filterMenu.allData = [self transformFromOldDicToNewDic];
     
     [self.filterMenu.menuTableView reloadData];
     
-    if(self.screeningNavBlock){ // 点击了返回按钮，清空所有筛选条件
-        self.screeningNavBlock(nil,nil,nil,nil,nil);
-    }
+//    if(self.screeningDeleteBlock){ // 点击了返回按钮，清空所有筛选条件
+//        self.screeningDeleteBlock();
+//    }
 }
 
 /**

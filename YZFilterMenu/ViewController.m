@@ -74,8 +74,8 @@
         [weak tapSureFilterButton];
     }];
     
-    //点击确定按钮
-    filterVC.screeningNavBlock = ^(NSArray *tradeDirectIDs,NSArray *companyIDs,NSArray *bankIDs,NSArray *countPropIDs,NSArray *countModelIDs){
+    //点击清除按钮
+    filterVC.screeningDeleteBlock = ^(){
         //清除标记
     };
     
