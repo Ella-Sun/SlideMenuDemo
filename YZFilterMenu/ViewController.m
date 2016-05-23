@@ -21,7 +21,11 @@
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, weak) UIView *upView;
 
-@property (nonatomic, strong) NSDictionary * allFilterDic;
+@property (nonatomic, strong) NSArray   * tradeIds;
+@property (nonatomic, strong) NSArray   * companyIds;
+@property (nonatomic, strong) NSArray   * bankIds;
+@property (nonatomic, strong) NSArray   * propertyIds;
+@property (nonatomic, strong) NSArray   * modelIds;
 
 @end
 
@@ -50,7 +54,12 @@
     filterVC.view.frame = window.bounds;
     window.rootViewController = nav;
     self.window = window;
-    filterVC.subTextTitles = [NSMutableDictionary dictionaryWithDictionary:self.allFilterDic];
+    
+    filterVC.keepTradeDirIDs = self.tradeIds;
+    filterVC.keepComIDs = self.companyIds;
+    filterVC.keepBanksIDs = self.bankIds;
+    filterVC.keepCountPropIDs = self.propertyIds;
+    filterVC.keepCountModelIDs = self.modelIds;
     
     UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
@@ -60,24 +69,22 @@
     self.upView = view;
     
     __weak typeof(self) weak = self;
-    filterVC.allFilterModelStatus = ^(NSDictionary *selectedFilters){
-        weak.allFilterDic = selectedFilters;
-    };
-    
-    [filterVC setCancleBarItemHandle:^{
+    //点击确定按钮
+    [filterVC setSureBarItemHandle:^{
         [weak tapAction];
     }];
     
+    //点击确定按钮
     filterVC.screeningNavBlock = ^(NSArray *tradeDirectIDs,NSArray *companyIDs,NSArray *bankIDs,NSArray *countPropIDs,NSArray *countModelIDs){
         //清除标记
     };
     
     filterVC.screeningBlock = ^(NSArray *tradeDirectIDs,NSArray *companyIDs,NSArray *bankIDs,NSArray *countPropIDs,NSArray *countModelIDs){
-        NSLog(@"tradeDirectIDs:%@",tradeDirectIDs);
-        NSLog(@"companyIDs:%@",companyIDs);
-        NSLog(@"bankIDs:%@",bankIDs);
-        NSLog(@"countPropIDs:%@",countPropIDs);
-        NSLog(@"countModelIDs:%@",countModelIDs);
+        weak.tradeIds = tradeDirectIDs;
+        weak.companyIds = companyIDs;
+        weak.bankIds = bankIDs;
+        weak.propertyIds = countPropIDs;
+        weak.modelIds = countModelIDs;
     };
     
 }

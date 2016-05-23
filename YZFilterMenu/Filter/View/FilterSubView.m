@@ -13,7 +13,7 @@
 @interface FilterSubView ()<UITableViewDataSource, UITableViewDelegate> {
     BOOL close[1];//NO:表示展开 YES:表示收起
     
-    BOOL sectionClose[1];//NO:表示button被点击 YES:表示button未被点击
+    BOOL sectionClose[1];//NO:表示不全选 YES:表示全选
 }
 
 @property (nonatomic, strong) UITableView *subTableView;
@@ -98,19 +98,25 @@
     rightBtn.selected = isSelected;
     NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
     if (rightBtn.selected) {
-        [self.selectedRows addObject:indexStr];
+        if (![self.selectedRows containsObject:indexStr]) {
+            [self.selectedRows addObject:indexStr];
+        }
     } else {
         [self.selectedRows removeObject:indexStr];
     }
+//    NSLog(@"0：%@",self.selectedRows);
     __weak typeof(self) weakSelf = self;
     cell.cellClickBlock = ^{
         
         rightBtn.selected = !rightBtn.selected;
         if (rightBtn.selected) {
-            [weakSelf.selectedRows addObject:indexStr];
+            if (![weakSelf.selectedRows containsObject:indexStr]) {
+                [weakSelf.selectedRows addObject:indexStr];
+            }
         } else {
             [weakSelf.selectedRows removeObject:indexStr];
         }
+//        NSLog(@"1：%@",weakSelf.selectedRows);
         
         //改变全选按钮的状态
         BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;

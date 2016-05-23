@@ -79,7 +79,7 @@
     for (FilterSelectModel *model in _data) {
         NSMutableArray *indexData = [NSMutableArray array];
         [indexData addObject:model.title];
-        [indexData addObject:[NSNumber numberWithBool:model.isSelected]];
+        [indexData addObject:[NSNumber numberWithBool:model.selected]];
         [tableData addObject:indexData];
     }
     

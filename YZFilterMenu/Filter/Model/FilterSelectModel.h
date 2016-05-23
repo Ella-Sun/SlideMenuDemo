@@ -12,6 +12,6 @@
 
 @property (nonatomic, copy) NSString * title;
 
-@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, assign) BOOL selected;
 
 @end

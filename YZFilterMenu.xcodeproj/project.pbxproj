@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0CEBE61CEEAB9300C7AF2B /* btn_back_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0CEBE51CEEAB9300C7AF2B /* btn_back_red@2x.png */; };
+		5C406A041CF2F01500904E83 /* FilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C406A031CF2F01500904E83 /* FilterMenuView.m */; };
 		5CF721521CEDCBCE0048D479 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721511CEDCBCE0048D479 /* main.m */; };
 		5CF721551CEDCBCE0048D479 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721541CEDCBCE0048D479 /* AppDelegate.m */; };
 		5CF721581CEDCBCE0048D479 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721571CEDCBCE0048D479 /* ViewController.m */; };
@@ -26,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		5C0CEBE51CEEAB9300C7AF2B /* btn_back_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back_red@2x.png"; sourceTree = "<group>"; };
+		5C406A021CF2F01500904E83 /* FilterMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterMenuView.h; sourceTree = "<group>"; };
+		5C406A031CF2F01500904E83 /* FilterMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterMenuView.m; sourceTree = "<group>"; };
 		5CF7214D1CEDCBCE0048D479 /* YZFilterMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YZFilterMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF721511CEDCBCE0048D479 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5CF721531CEDCBCE0048D479 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 			children = (
 				5CF721771CEDCC8B0048D479 /* FilterSubTableViewCell.h */,
 				5CF721781CEDCC8B0048D479 /* FilterSubTableViewCell.m */,
+				5C406A021CF2F01500904E83 /* FilterMenuView.h */,
+				5C406A031CF2F01500904E83 /* FilterMenuView.m */,
 				5CF721811CEDCEF80048D479 /* FilterSubView.h */,
 				5CF721821CEDCEF80048D479 /* FilterSubView.m */,
 			);
@@ -230,6 +235,7 @@
 				5CF721801CEDCC8B0048D479 /* FilterSubTableViewCell.m in Sources */,
 				5CF721831CEDCEF80048D479 /* FilterSubView.m in Sources */,
 				5CF7217B1CEDCC8B0048D479 /* FilterBaseViewController.m in Sources */,
+				5C406A041CF2F01500904E83 /* FilterMenuView.m in Sources */,
 				5CF721551CEDCBCE0048D479 /* AppDelegate.m in Sources */,
 				5CF721521CEDCBCE0048D479 /* main.m in Sources */,
 			);
