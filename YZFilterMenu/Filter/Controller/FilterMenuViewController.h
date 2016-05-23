@@ -49,7 +49,7 @@ typedef void (^FilterBasicBlock)();
 
 
 //判断是否点击了确定按钮（如果选完条件，但直接点击导航栏的返回按钮则不保存筛选条件）
-@property (nonatomic, assign) BOOL isSureBtnClicked;
+//@property (nonatomic, assign) BOOL isTapDisMiss;
 
 - (void)setSureBarItemHandle:(FilterBasicBlock)basicBlock;
 

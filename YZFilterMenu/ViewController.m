@@ -71,7 +71,7 @@
     __weak typeof(self) weak = self;
     //点击确定按钮
     [filterVC setSureBarItemHandle:^{
-        [weak tapAction];
+        [weak tapSureFilterButton];
     }];
     
     //点击确定按钮
@@ -86,17 +86,25 @@
         weak.propertyIds = countPropIDs;
         weak.modelIds = countModelIDs;
     };
-    
 }
 
-- (void)tapAction{
-    
+
+- (void)tapSureFilterButton {
     [self.upView removeFromSuperview];
     [self.window resignKeyWindow];
     self.window.hidden = YES;
     self.window  = nil;
     self.upView = nil;
+}
+
+- (void)tapAction{
+    self.tradeIds = nil;
+    self.companyIds = nil;
+    self.bankIds = nil;
+    self.propertyIds = nil;
+    self.modelIds = nil;
     
+    [self tapSureFilterButton];
 }
 
 @end

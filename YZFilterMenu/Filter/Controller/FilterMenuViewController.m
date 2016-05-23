@@ -67,7 +67,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    self.isSureBtnClicked = NO;
+//    self.isTapDisMiss = YES;
 }
 
 - (void)viewDidLoad {
@@ -88,17 +88,13 @@
 }
 
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
     // 没有点击确定按钮，直接点击的是导航栏上面的返回按钮,清空筛选条件
-    if (!self.isSureBtnClicked) {
-        _keepTradeDirIDs = nil;
-        _keepComIDs = nil;
-        _keepBanksIDs = nil;
-        _keepCountPropIDs = nil;
-        _keepCountModelIDs = nil;
-    }
-}
+//    if (self.isTapDisMiss) {
+//        
+//    }
+//}
 
 - (void)setSureBarItemHandle:(FilterBasicBlock)basicBlock{
     
@@ -113,6 +109,7 @@
     /**
      *  所有选项恢复默认，即全选
      */
+//    self.isTapDisMiss = NO;
     [self.subTextTitles removeAllObjects];
     self.filterMenu.allData = self.subTextTitles;
     [self.filterMenu.menuTableView reloadData];
@@ -128,7 +125,7 @@
 - (void)sureAction{
     
     //保存选项
-    self.isSureBtnClicked = YES;
+//    self.isTapDisMiss = NO;
     if (self.screeningBlock) {
         self.screeningBlock(_keepTradeDirIDs,_keepComIDs,_keepBanksIDs,_keepCountPropIDs,_keepCountModelIDs);
     }    
@@ -290,12 +287,10 @@
         NSInteger index = 0;
         for (FilterSelectModel *model in childAry) {
             NSString *indexStr = [NSString stringWithFormat:@"%ld",index];
-            if ([rows containsObject:indexStr]) {
-//                [changeTexts addObject:model];
-            } else {
+            if (![rows containsObject:indexStr]) {
                 model.selected = NO;
-                [changeTexts replaceObjectAtIndex:index withObject:model];
             }
+            [changeTexts addObject:model];
             index++;
         }
     }
