@@ -8,8 +8,6 @@
 
 #import "FilterMenuView.h"
 
-#import "FilterSelectModel.h"
-
 @interface FilterMenuView ()
 
 @end
@@ -61,18 +59,7 @@
         cell.detailTextLabel.text = detailText;
         return cell;
     }
-    NSArray *detailAry = [self.allData valueForKey:title];
-    for (FilterSelectModel *model in detailAry) {
-        if (model.selected) {
-            detailText = [detailText stringByAppendingFormat:@",%@",model.title];
-        }
-    }
-    
-    if (detailText.length > 0) {
-        detailText = [detailText stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
-    }
-    
-    
+    detailText = [self.allData valueForKey:title];
     cell.detailTextLabel.text = detailText;
     
     return cell;

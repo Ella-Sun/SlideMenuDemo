@@ -12,8 +12,11 @@
 
 @property (nonatomic, strong) UITableView *menuTableView;
 
+/**
+ *  @{@"title":detailText}
+ */
 @property (nonatomic, strong) NSArray *arrTitle;
 
-@property (nonatomic, strong) NSMutableDictionary * allData;
+@property (nonatomic, strong) NSDictionary * allData;
 
 @end

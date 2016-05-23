@@ -104,7 +104,6 @@
     } else {
         [self.selectedRows removeObject:indexStr];
     }
-//    NSLog(@"0：%@",self.selectedRows);
     __weak typeof(self) weakSelf = self;
     cell.cellClickBlock = ^{
         
@@ -116,7 +115,6 @@
         } else {
             [weakSelf.selectedRows removeObject:indexStr];
         }
-//        NSLog(@"1：%@",weakSelf.selectedRows);
         
         //改变全选按钮的状态
         BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;
