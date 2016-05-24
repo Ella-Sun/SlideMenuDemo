@@ -40,10 +40,14 @@ typedef void (^FilterBasicBlock)();
  */
 @property (nonatomic, strong) NSArray * keepCountModelIDs;
 
+@property (nonatomic, strong) NSDictionary * recordSelectedTexts;
+
 //确定block
 @property (nonatomic, copy) void (^screeningBlock)(NSArray *,NSArray *,NSArray *,NSArray *,NSArray *);
 //清空block
 @property (nonatomic, copy) void (^screeningDeleteBlock)();
+
+@property (nonatomic, copy) void (^RecordSelectTexts)(NSDictionary *);
 //点击了导航栏上的block
 //@property (nonatomic, copy) void (^screeningNavBlock)(NSArray *,NSArray *,NSArray *,NSArray *,NSArray *);
 

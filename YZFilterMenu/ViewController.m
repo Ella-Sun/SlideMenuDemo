@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSArray   * bankIds;
 @property (nonatomic, strong) NSArray   * propertyIds;
 @property (nonatomic, strong) NSArray   * modelIds;
+@property (nonatomic, strong) NSDictionary * recordFilter;
 
 @end
 
@@ -60,6 +61,7 @@
     filterVC.keepBanksIDs = self.bankIds;
     filterVC.keepCountPropIDs = self.propertyIds;
     filterVC.keepCountModelIDs = self.modelIds;
+    filterVC.recordSelectedTexts = self.recordFilter;
     
     UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
@@ -69,6 +71,9 @@
     self.upView = view;
     
     __weak typeof(self) weak = self;
+    filterVC.RecordSelectTexts = ^(NSDictionary *recordTexts){
+        weak.recordFilter = recordTexts;
+    };
     //点击确定按钮
     [filterVC setSureBarItemHandle:^{
         [weak tapSureFilterButton];
@@ -105,6 +110,9 @@
     self.modelIds = nil;
     
     [self tapSureFilterButton];
+    
+    //清除标记
+    
 }
 
 @end

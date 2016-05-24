@@ -45,7 +45,11 @@
 
 - (NSMutableDictionary *)subTextTitles {
     if (!_subTextTitles) {
-        _subTextTitles = [NSMutableDictionary dictionary];
+        _subTextTitles = [NSMutableDictionary dictionaryWithDictionary:@{@"收支方向":@[],
+                                                                         @"全部公司":@[],
+                                                                         @"全部银行":@[],
+                                                                         @"账户性质":@[],
+                                                                         @"账户模式":@[]}];
     }
     return _subTextTitles;
 }
@@ -58,17 +62,19 @@
     return _arrTitle;
 }
 
+- (void)setRecordSelectedTexts:(NSDictionary *)recordSelectedTexts {
+    _recordSelectedTexts = recordSelectedTexts;
+    
+    //刷新界面
+    self.filterMenu.allData = _recordSelectedTexts;
+    self.filterMenu.arrTitle = self.arrTitle;
+}
+
 /**
  * 更改状态栏颜色为白色
  */
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-//    self.isTapDisMiss = YES;
 }
 
 - (void)viewDidLoad {
@@ -83,7 +89,7 @@
     
     CGRect menuFrame = CGRectMake(0,0, kScreenWidth-kMenuLeftSpace, kScreenHeight);
     self.filterMenu = [[FilterMenuView alloc] initWithFrame:menuFrame];
-    self.filterMenu.arrTitle = self.arrTitle;
+//    self.filterMenu.arrTitle = self.arrTitle;
     self.filterMenu.menuTableView.delegate = self;
     [self.view addSubview:self.filterMenu];
 }
@@ -109,12 +115,11 @@
     _keepCountModelIDs = nil;
     
     self.filterMenu.allData = [self transformFromOldDicToNewDic];
-    
     [self.filterMenu.menuTableView reloadData];
     
-//    if(self.screeningDeleteBlock){ // 点击了返回按钮，清空所有筛选条件
-//        self.screeningDeleteBlock();
-//    }
+    if (self.screeningDeleteBlock) {
+        self.screeningDeleteBlock();
+    }
 }
 
 /**
@@ -129,14 +134,26 @@
     for (NSString *title in keysAry) {
         NSArray *detailAry = [self.subTextTitles valueForKey:title];
         NSString *detailText = @"";
+        NSInteger selCount = 0;
         for (FilterSelectModel *model in detailAry) {
             if (model.selected) {
+                selCount++;
                 detailText = [detailText stringByAppendingFormat:@",%@",model.title];
             }
         }
         if (detailText.length > 0) {
             detailText = [detailText stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
         }
+        if (detailText.length == 0) {
+            detailText = [self.filterMenu.allData valueForKey:title];
+            if (detailText.length == 0) {
+                detailText = @"全部";
+            }
+        }
+        if ((selCount != 0) && (detailAry.count == selCount)) {
+            detailText = @"全部";
+        }
+//        NSLog(@"%@",detailText);
         [newDic setValue:detailText forKey:title];
     }
     return newDic;
@@ -150,7 +167,11 @@
     //保存选项
     if (self.screeningBlock) {
         self.screeningBlock(_keepTradeDirIDs,_keepComIDs,_keepBanksIDs,_keepCountPropIDs,_keepCountModelIDs);
-    }    
+    }
+    
+    if (self.RecordSelectTexts) {
+        self.RecordSelectTexts(self.filterMenu.allData);
+    }
     
     if(self.basicBlock)
         self.basicBlock();
@@ -226,32 +247,6 @@
     [self.navigationController pushViewController:svc animated:YES];
 }
 
-
-#pragma mark - set
-
-//- (void)setKeepTradeDirIDs:(NSArray *)keepTradeDirIDs {
-//    _keepTradeDirIDs = keepTradeDirIDs;
-//    if (_keepTradeDirIDs.count == 0) {
-//        return;
-//    }
-//    NSArray *childAry = [self.subTextTitles valueForKey:@"收支方向"];
-//    if (childAry.count == 0) {
-//        childAry = @[@"收",@"支"];//查询数据库
-//    }
-//    //选择全部
-//    if (_keepTradeDirIDs.count == childAry.count) {
-//        return;
-//    }
-//    //需显示 //此处处理可以避免点击单元格 再进行数据库处理
-//    if (_keepTradeDirIDs.count <= childAry.count) {
-//        [self insertModelDataWithSubTitleAry:childAry
-//                               orSelectedAry:_keepTradeDirIDs
-//                               andTotleTitle:@"收支方向"];
-//        self.filterMenu.allData = self.subTextTitles;
-//        [self.filterMenu.menuTableView reloadData];
-//    }
-//}
-
 #pragma mark - public
 /**
  *  在总的数据记录字典里插入数据
@@ -287,10 +282,7 @@
 }
 
 
-/**
- *  代理
- *
- */
+#pragma mark - 代理
 - (void)rowDidSelectes:(NSArray *)rows {
     
     //标题数组
@@ -309,7 +301,9 @@
         NSInteger index = 0;
         for (FilterSelectModel *model in childAry) {
             NSString *indexStr = [NSString stringWithFormat:@"%ld",index];
-            if (![rows containsObject:indexStr]) {
+            if ([rows containsObject:indexStr]) {
+                model.selected = YES;
+            } else {
                 model.selected = NO;
             }
             [changeTexts addObject:model];
