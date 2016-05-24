@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0CEBE61CEEAB9300C7AF2B /* btn_back_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0CEBE51CEEAB9300C7AF2B /* btn_back_red@2x.png */; };
+		5C2315AE1CF3FD7C00D1D744 /* slideMenu.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C2315AD1CF3FD7C00D1D744 /* slideMenu.gif */; };
 		5C406A041CF2F01500904E83 /* FilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C406A031CF2F01500904E83 /* FilterMenuView.m */; };
 		5CF721521CEDCBCE0048D479 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721511CEDCBCE0048D479 /* main.m */; };
 		5CF721551CEDCBCE0048D479 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721541CEDCBCE0048D479 /* AppDelegate.m */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		5C0CEBE51CEEAB9300C7AF2B /* btn_back_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back_red@2x.png"; sourceTree = "<group>"; };
+		5C2315AD1CF3FD7C00D1D744 /* slideMenu.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = slideMenu.gif; sourceTree = "<group>"; };
 		5C406A021CF2F01500904E83 /* FilterMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterMenuView.h; sourceTree = "<group>"; };
 		5C406A031CF2F01500904E83 /* FilterMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterMenuView.m; sourceTree = "<group>"; };
 		5CF7214D1CEDCBCE0048D479 /* YZFilterMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YZFilterMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,7 @@
 		5CF721671CEDCC8B0048D479 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				5C2315AD1CF3FD7C00D1D744 /* slideMenu.gif */,
 				5CF721681CEDCC8B0048D479 /* checkbox_deafault@2x.png */,
 				5CF721691CEDCC8B0048D479 /* checkbox_selected@2x.png */,
 				5C0CEBE51CEEAB9300C7AF2B /* btn_back_red@2x.png */,
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CF7217A1CEDCC8B0048D479 /* checkbox_selected@2x.png in Resources */,
+				5C2315AE1CF3FD7C00D1D744 /* slideMenu.gif in Resources */,
 				5CF721601CEDCBCE0048D479 /* LaunchScreen.storyboard in Resources */,
 				5CF721791CEDCC8B0048D479 /* checkbox_deafault@2x.png in Resources */,
 				5CF7215D1CEDCBCE0048D479 /* Assets.xcassets in Resources */,

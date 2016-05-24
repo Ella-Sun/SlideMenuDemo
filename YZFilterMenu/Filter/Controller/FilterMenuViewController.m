@@ -214,15 +214,15 @@
         NSArray *keepIndexs = @[];
         //最初的全部数据
         if ([title isEqualToString:@"收支方向"]) {
-            subTextModels = @[@"收",@"支"];//经查询得到
+            subTextModels = @[@"收",@"支"];//可修改为查询数据库得到
             keepIndexs = _keepTradeDirIDs;
         }
         if ([title isEqualToString:@"全部公司"]) {
-            subTextModels = @[@"云资通汇",@"云资通汇分公司1",@"云资通汇分公司2"];
+            subTextModels = @[@"云资通汇",@"Alibaba",@"Baidu"];
             keepIndexs = _keepComIDs;
         }
         if ([title isEqualToString:@"全部银行"]) {
-            subTextModels = @[@"招商银行股份有限公司福州分行",@"招商银行股份有限公司北京分行"];
+            subTextModels = @[@"招商银行股份有限公司",@"建设银行股份有限公司北京分行",@"工商银行股份有限公司"];
             keepIndexs = _keepBanksIDs;
         }
         
@@ -232,7 +232,7 @@
         }
         
         if ([title isEqualToString:@"账户模式"]) {
-            subTextModels = @[@"人工",@"直连"];
+            subTextModels = @[@"人工",@"人工1"];
             keepIndexs = _keepCountModelIDs;
         }
         
