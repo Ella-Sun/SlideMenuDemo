@@ -145,7 +145,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     CGFloat screenWidth = self.bounds.size.width;
-    CGFloat spaceMargin = 10;
+    CGFloat spaceMargin = 15;
     CGFloat tempHeight = 44;
     
     CGFloat selectWidth = 30;
@@ -191,10 +191,10 @@
     UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectZero];
     arrowView.frame = CGRectMake(arrowXpiex, arrowYpiex, arrowWidth, arrowWidth);
     arrowView.tag = 300 + section;
-    arrowView.image = [UIImage imageNamed:@"btn_back_red"];
-    CGFloat rotationProp = -M_PI/2;
+    arrowView.image = [UIImage imageNamed:@"icon_arrow_default"];
+    CGFloat rotationProp = 0;
     if (close[0]) {
-        rotationProp = M_PI;
+        rotationProp = -M_PI/2;
     }
     CGAffineTransform rotationAf = CGAffineTransformMakeRotation(rotationProp);
     arrowView.transform = rotationAf;

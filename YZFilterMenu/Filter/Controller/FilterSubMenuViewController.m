@@ -1,6 +1,6 @@
 //
 //  FilterSubMenuViewController.m
-//  JDSelectDemo
+//  YZFilterMenu
 //
 //  Created by IOS-Sun on 16/5/19.
 //  Copyright © 2016年 mark. All rights reserved.
@@ -38,7 +38,7 @@
     [super viewDidLoad];
     self.title = self.subTitle;
 
-    UIImage *cancelBarImage = [UIImage imageNamed:@"btn_back_red"];
+    UIImage *cancelBarImage = [UIImage imageNamed:@"icon_back"];
     UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc]
                                       initWithImage:cancelBarImage
                                       style:UIBarButtonItemStylePlain
