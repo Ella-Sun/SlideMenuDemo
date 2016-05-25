@@ -45,18 +45,17 @@
 
 - (NSMutableDictionary *)subTextTitles {
     if (!_subTextTitles) {
-        _subTextTitles = [NSMutableDictionary dictionaryWithDictionary:@{@"收支方向":@[],
-                                                                         @"全部公司":@[],
-                                                                         @"全部银行":@[],
-                                                                         @"账户性质":@[],
-                                                                         @"账户模式":@[]}];
+        _subTextTitles = [NSMutableDictionary dictionary];
+        for (NSString *title in self.arrTitle) {
+            [_subTextTitles setValue:@[] forKey:title];
+        }
     }
     return _subTextTitles;
 }
 
 - (NSArray *)arrTitle {
     if (!_arrTitle) {
-        _arrTitle = @[@[@"收支方向"],@[@"全部公司",@"全部银行",@"账户性质",@"账户模式"]];
+        _arrTitle = @[@"收支方向",@"全部公司",@"全部银行",@"账户性质",@"账户模式"];
         
     }
     return _arrTitle;
@@ -66,8 +65,16 @@
     _recordSelectedTexts = recordSelectedTexts;
     
     //刷新界面
-    self.filterMenu.allData = _recordSelectedTexts;
     self.filterMenu.arrTitle = self.arrTitle;
+    if (_recordSelectedTexts == 0) {
+        NSMutableDictionary *filterDic = [NSMutableDictionary dictionary];
+        for (NSString *title in self.arrTitle) {
+            [filterDic setValue:@"全部" forKey:title];
+        }
+        _filterMenu.allData = filterDic;
+    } else {
+        self.filterMenu.allData = _recordSelectedTexts;
+    }
 }
 
 /**
@@ -204,8 +211,7 @@
     FilterSubMenuViewController *svc = [[FilterSubMenuViewController alloc] init];
     svc.delegate = self;
     
-    NSArray *childAry = self.arrTitle[indexPath.section];
-    NSString *title = childAry[indexPath.row];
+    NSString *title = self.arrTitle[indexPath.row];
     
     NSArray *selSubTexts = [self.subTextTitles valueForKey:title];
     if (selSubTexts.count == 0) {
@@ -285,10 +291,8 @@
 #pragma mark - 代理
 - (void)rowDidSelectes:(NSArray *)rows {
     
-    //标题数组
-    NSArray *sectionAry = self.arrTitle[_selectedIndexPath.section];
     //标题
-    NSString *title = sectionAry[_selectedIndexPath.row];
+    NSString *title = self.arrTitle[_selectedIndexPath.row];
     //对应子数组(models)
     NSArray *childAry = [self.subTextTitles valueForKey:title];
     NSMutableArray *changeTexts = [NSMutableArray array];
@@ -318,20 +322,35 @@
     
     if ([title isEqualToString:@"收支方向"]) {
         _keepTradeDirIDs = rows;
+        if (rows.count == childAry.count) {
+            _keepTradeDirIDs = nil;
+        }
     }
     if ([title isEqualToString:@"全部公司"]) {
         _keepComIDs = rows;
+        if (rows.count == childAry.count) {
+            _keepComIDs = nil;
+        }
     }
     if ([title isEqualToString:@"全部银行"]) {
         _keepBanksIDs = rows;
+        if (rows.count == childAry.count) {
+            _keepBanksIDs = nil;
+        }
     }
     
     if ([title isEqualToString:@"账户性质"]) {
         _keepCountPropIDs = rows;
+        if (rows.count == childAry.count) {
+            _keepCountPropIDs = nil;
+        }
     }
     
     if ([title isEqualToString:@"账户模式"]) {
         _keepCountModelIDs = rows;
+        if (rows.count == childAry.count) {
+            _keepCountModelIDs = nil;
+        }
     }
 }
 

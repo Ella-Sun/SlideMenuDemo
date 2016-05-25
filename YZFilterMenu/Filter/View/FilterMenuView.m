@@ -24,20 +24,15 @@
 
 - (void)setupDefaultViews {
     
-    self.menuTableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStyleGrouped];
+    self.menuTableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     self.menuTableView.dataSource = self;
+    self.menuTableView.tableFooterView = [[UIView alloc] init];
     [self addSubview:self.menuTableView];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return self.arrTitle.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    NSArray *arr = self.arrTitle[section];
-    return arr.count;
+    return self.arrTitle.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -50,8 +45,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    NSArray *arr = self.arrTitle[indexPath.section];
-    NSString *title = arr[indexPath.row];
+    NSString *title = self.arrTitle[indexPath.row];
     cell.textLabel.text = title;
     
     NSString *detailText = @"";
