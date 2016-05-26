@@ -234,6 +234,8 @@
     NSInteger tag = sender.tag - 100;
     sectionClose[tag] = sender.selected;
     
+    [self.selectedRows removeAllObjects];
+    
     //改变所有cell按钮的选择状态
     NSInteger index = 0;
     NSMutableArray *newData = [NSMutableArray arrayWithArray:self.data];
@@ -241,7 +243,14 @@
         NSMutableArray *newModel = [NSMutableArray arrayWithArray:valueAry];
         NSNumber *selectNumber = [NSNumber numberWithBool:sender.selected];
         [newModel replaceObjectAtIndex:1 withObject:selectNumber];
-        [newData replaceObjectAtIndex:index++ withObject:newModel];
+        [newData replaceObjectAtIndex:index withObject:newModel];
+        
+        if (sender.selected) {
+            NSString *indexStr = [NSString stringWithFormat:@"%ld",index];
+            [self.selectedRows addObject:indexStr];
+        }
+        index++;
+        
     }
     self.data = newData;
     [self.subTableView reloadData];
