@@ -44,7 +44,7 @@
 
 - (void)actionBtn{
     
-    UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectMake(100, 0, kScreenWidth-100, kScreenHeight)];
+    UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectMake(kScreenWidth, 0, kScreenWidth-kMenuLeftSpace, kScreenHeight)];
     window.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.7];
     window.windowLevel = UIWindowLevelNormal;
     window.hidden = NO;
@@ -56,19 +56,21 @@
     window.rootViewController = nav;
     self.window = window;
     
-    filterVC.keepTradeDirIDs = self.tradeIds;
-    filterVC.keepComIDs = self.companyIds;
-    filterVC.keepBanksIDs = self.bankIds;
-    filterVC.keepCountPropIDs = self.propertyIds;
-    filterVC.keepCountModelIDs = self.modelIds;
-    filterVC.recordSelectedTexts = self.recordFilter;
-    
     UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
     [view addGestureRecognizer:tap];
     [self.view addSubview:view];
     self.upView = view;
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         CGRect winFrame = self.window.frame;
+                         winFrame.origin.x = kMenuLeftSpace;
+                         self.window.frame = winFrame;
+                     } completion:nil];
     
     __weak typeof(self) weak = self;
     filterVC.RecordSelectTexts = ^(NSDictionary *recordTexts){
@@ -91,15 +93,33 @@
         weak.propertyIds = countPropIDs;
         weak.modelIds = countModelIDs;
     };
+    filterVC.keepTradeDirIDs = self.tradeIds;
+    filterVC.keepComIDs = self.companyIds;
+    filterVC.keepBanksIDs = self.bankIds;
+    filterVC.keepCountPropIDs = self.propertyIds;
+    filterVC.keepCountModelIDs = self.modelIds;
+//    self.filterVC.arrTitle = @[@"全部公司",@"全部银行",@"账户性质",@"账户模式"];
+    filterVC.recordSelectedTexts = self.recordFilter;
 }
 
 
 - (void)tapSureFilterButton {
-    [self.upView removeFromSuperview];
-    [self.window resignKeyWindow];
-    self.window.hidden = YES;
-    self.window  = nil;
-    self.upView = nil;
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         CGRect winFrame = self.window.frame;
+                         winFrame.origin.x = kScreenWidth;
+                         self.window.frame = winFrame;
+                         self.upView.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         [self.upView removeFromSuperview];
+                         [self.window resignKeyWindow];
+                         self.window.hidden = YES;
+                         self.window  = nil;
+                         self.upView = nil;
+//                         self.filterVC = nil;
+                     }];
 }
 
 - (void)tapAction{
@@ -108,6 +128,8 @@
     self.bankIds = nil;
     self.propertyIds = nil;
     self.modelIds = nil;
+    
+    self.recordFilter = nil;
     
     [self tapSureFilterButton];
     

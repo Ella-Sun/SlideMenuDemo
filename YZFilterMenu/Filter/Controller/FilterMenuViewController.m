@@ -9,7 +9,6 @@
 #import "FilterMenuViewController.h"
 
 #import "FilterSubMenuViewController.h"
-//#import "FilterFirstView.h"
 #import "FilterSelectModel.h"
 #import "FilterMenuView.h"
 
@@ -21,19 +20,16 @@
 
 @interface FilterMenuViewController ()<UITableViewDelegate,FilterSelectedDelegate>
 
-
 @property (nonatomic, strong) FilterMenuView *filterMenu;
 
 /**
  *  默认显示筛选项
  */
 @property (nonatomic, strong) NSArray *arrTitle;
-
 /**
  *  菜单选中位置
  */
 @property (nonatomic, assign) NSIndexPath *selectedIndexPath;
-
 /**
  *  所有的子菜单汇总名称
  */
@@ -63,7 +59,6 @@
 
 - (void)setRecordSelectedTexts:(NSDictionary *)recordSelectedTexts {
     _recordSelectedTexts = recordSelectedTexts;
-    
     //刷新界面
     self.filterMenu.arrTitle = self.arrTitle;
     if (_recordSelectedTexts == 0) {
@@ -92,13 +87,6 @@
     return _recordSelectedTexts;
 }
 
-/**
- * 更改状态栏颜色为白色
- */
-//- (UIStatusBarStyle)preferredStatusBarStyle{
-//    return UIStatusBarStyleLightContent;
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"筛选";
@@ -117,7 +105,6 @@
 }
 
 - (void)setSureBarItemHandle:(FilterBasicBlock)basicBlock{
-    
     self.basicBlock = basicBlock;
 }
 
@@ -171,7 +158,9 @@
     
     NSMutableDictionary *newDic = [NSMutableDictionary dictionary];
     NSArray *keysAry = self.subTextTitles.allKeys;
-    
+    if (keysAry.count == 0) {
+        return self.recordSelectedTexts;
+    }
     for (NSString *title in keysAry) {
         NSArray *detailAry = [self.subTextTitles valueForKey:title];
         NSString *detailText = @"";
@@ -200,7 +189,6 @@
     return newDic;
 }
 
-
 - (NSMutableArray *)addNotSelectRowsIndexWithMax:(NSInteger)maxIndex {
     NSMutableArray *indexAry = [NSMutableArray array];
     for (NSInteger i = 0; i < maxIndex; i++) {
@@ -208,7 +196,6 @@
     }
     return indexAry;
 }
-
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -241,7 +228,7 @@
             keepIndexs = _keepTradeDirIDs;
         }
         if ([title isEqualToString:@"全部公司"]) {
-            subTextModels = @[@"云资通汇",@"Alibaba",@"Baidu"];
+            subTextModels = @[@"SOHU",@"Alibaba",@"Baidu"];
             keepIndexs = _keepComIDs;
         }
         if ([title isEqualToString:@"全部银行"]) {
