@@ -78,11 +78,26 @@
 }
 
 /**
+ *  当清空时，初始化tableview右侧：全部
+ *
+ */
+- (NSDictionary *)createTableViewData{
+    if (_recordSelectedTexts == 0) {
+        NSMutableDictionary *filterDic = [NSMutableDictionary dictionary];
+        for (NSString *title in self.arrTitle) {
+            [filterDic setValue:@"全部" forKey:title];
+        }
+        _recordSelectedTexts = filterDic;
+    }
+    return _recordSelectedTexts;
+}
+
+/**
  * 更改状态栏颜色为白色
  */
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
+//- (UIStatusBarStyle)preferredStatusBarStyle{
+//    return UIStatusBarStyleLightContent;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,6 +122,24 @@
 }
 
 /**
+ *  点击了确定按钮回调block
+ */
+- (void)sureAction{
+    
+    //保存选项
+    if (self.screeningBlock) {
+        self.screeningBlock(_keepTradeDirIDs,_keepComIDs,_keepBanksIDs,_keepCountPropIDs,_keepCountModelIDs);
+    }
+    
+    if (self.RecordSelectTexts) {
+        self.RecordSelectTexts(self.filterMenu.allData);
+    }
+    
+    if(self.basicBlock)
+        self.basicBlock();
+}
+
+/**
  *  点击清空按钮回调block
  */
 - (void)cancelAction{
@@ -121,7 +154,8 @@
     _keepCountPropIDs = nil;
     _keepCountModelIDs = nil;
     
-    self.filterMenu.allData = [self transformFromOldDicToNewDic];
+    _recordSelectedTexts = nil;
+    self.filterMenu.allData = [self createTableViewData];//[self transformFromOldDicToNewDic];
     [self.filterMenu.menuTableView reloadData];
     
     if (self.screeningDeleteBlock) {
@@ -166,23 +200,6 @@
     return newDic;
 }
 
-/**
- *  点击了确定按钮回调block
- */
-- (void)sureAction{
-    
-    //保存选项
-    if (self.screeningBlock) {
-        self.screeningBlock(_keepTradeDirIDs,_keepComIDs,_keepBanksIDs,_keepCountPropIDs,_keepCountModelIDs);
-    }
-    
-    if (self.RecordSelectTexts) {
-        self.RecordSelectTexts(self.filterMenu.allData);
-    }
-    
-    if(self.basicBlock)
-        self.basicBlock();
-}
 
 - (NSMutableArray *)addNotSelectRowsIndexWithMax:(NSInteger)maxIndex {
     NSMutableArray *indexAry = [NSMutableArray array];
