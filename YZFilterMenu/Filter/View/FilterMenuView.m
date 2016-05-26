@@ -25,6 +25,7 @@
 - (void)setupDefaultViews {
     
     self.menuTableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
+    self.menuTableView.backgroundColor = [UIColor clearColor];
     self.menuTableView.dataSource = self;
     self.menuTableView.tableFooterView = [[UIView alloc] init];
     [self addSubview:self.menuTableView];

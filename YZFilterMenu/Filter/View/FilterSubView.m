@@ -71,7 +71,8 @@
 - (void)setupDefaultViews {
     
     CGRect tableFrame = CGRectMake(0,0, self.bounds.size.width, self.bounds.size.height);
-    self.subTableView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStyleGrouped];
+    self.subTableView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
+    self.subTableView.backgroundColor = [UIColor clearColor];
     self.subTableView.delegate = self;
     self.subTableView.dataSource = self;
     self.subTableView.tableFooterView = [[UIView alloc] init];
@@ -79,6 +80,10 @@
 }
 
 #pragma mark - tableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -224,6 +229,10 @@
     return 44;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10.0f;
+}
+
 /**
  *  全选按钮被点击
  *
@@ -250,8 +259,8 @@
             [self.selectedRows addObject:indexStr];
         }
         index++;
-        
     }
+//    NSLog(@"%ld",self.selectedRows.count);
     self.data = newData;
     [self.subTableView reloadData];
 }

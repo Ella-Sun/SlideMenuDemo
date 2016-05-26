@@ -19,6 +19,7 @@
 //     Do any additional setup after loading the view.
 //    UIBarButtonItem *backBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back_red"] style:UIBarButtonItemStylePlain target:self action:@selector(navBackBarAction:)];
 //    self.navigationItem.leftBarButtonItem = backBarItem;
+    self.view.backgroundColor = [UIColor colorWithWhite:0.952 alpha:1.000];
 }
 
 - (void)navBackBarAction:(UINavigationItem *)bar{
