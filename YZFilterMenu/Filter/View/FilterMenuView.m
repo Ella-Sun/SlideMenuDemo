@@ -48,12 +48,11 @@
     NSString *title = self.arrTitle[indexPath.row];
     cell.textLabel.text = title;
     
-    NSString *detailText = @"";
-    if (self.allData.count == 0) {
-        cell.detailTextLabel.text = detailText;
+    NSString *detailText = [self.allData valueForKey:title];
+    if (detailText.length == 0) {
+        detailText = @"全部";
         return cell;
     }
-    detailText = [self.allData valueForKey:title];
     cell.detailTextLabel.text = detailText;
     
     return cell;

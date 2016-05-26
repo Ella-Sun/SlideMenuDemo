@@ -142,6 +142,7 @@
     _keepCountModelIDs = nil;
     
     _recordSelectedTexts = nil;
+    
     self.filterMenu.allData = [self createTableViewData];//[self transformFromOldDicToNewDic];
     [self.filterMenu.menuTableView reloadData];
     
@@ -323,7 +324,7 @@
     }
     //改变对应model的点击状态
     [self.subTextTitles setValue:changeTexts forKey:title];
-    
+    //记录选择之后detailText的状态
     self.filterMenu.allData = [self transformFromOldDicToNewDic];
     [self.filterMenu.menuTableView reloadData];
     
