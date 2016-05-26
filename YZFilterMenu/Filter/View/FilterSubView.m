@@ -18,6 +18,9 @@
 
 @property (nonatomic, strong) UITableView *subTableView;
 
+/**
+ *  存储sectionHeader上的全选按钮
+ */
 @property (nonatomic, strong) NSMutableArray * allSelBtns;
 
 @end
@@ -38,8 +41,14 @@
     return _selectedRows;
 }
 
+/**
+ *  setData
+ *
+ */
 - (void)setData:(NSArray *)data {
     _data = data;
+    
+    //检验全选与否
     BOOL isAllSelected = data.count==0?NO:YES;
     for (NSArray *model in data) {
         BOOL isSelected = [model[1] boolValue];
@@ -47,6 +56,7 @@
             isAllSelected = NO;
         }
     }
+    //初始化全选按钮状态
     sectionClose[0] = isAllSelected;
 }
 
@@ -69,10 +79,6 @@
 }
 
 #pragma mark - tableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -115,6 +121,14 @@
         } else {
             [weakSelf.selectedRows removeObject:indexStr];
         }
+        
+        //改变data内的记录数据——>折叠时记录状态
+        NSArray *valueAry = self.data[indexPath.row];
+        NSMutableArray *newValueAry = [NSMutableArray arrayWithArray:valueAry];
+        [newValueAry replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:rightBtn.selected]];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:self.data];
+        [newData replaceObjectAtIndex:indexPath.row withObject:newValueAry];
+        self.data = newData;
         
         //改变全选按钮的状态
         BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;
@@ -220,10 +234,11 @@
     NSInteger tag = sender.tag - 100;
     sectionClose[tag] = sender.selected;
     
+    //改变所有cell按钮的选择状态
     NSInteger index = 0;
     NSMutableArray *newData = [NSMutableArray arrayWithArray:self.data];
-    for (NSArray *model in self.data) {
-        NSMutableArray *newModel = [NSMutableArray arrayWithArray:model];
+    for (NSArray *valueAry in self.data) {
+        NSMutableArray *newModel = [NSMutableArray arrayWithArray:valueAry];
         NSNumber *selectNumber = [NSNumber numberWithBool:sender.selected];
         [newModel replaceObjectAtIndex:1 withObject:selectNumber];
         [newData replaceObjectAtIndex:index++ withObject:newModel];

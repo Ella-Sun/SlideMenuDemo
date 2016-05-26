@@ -297,9 +297,12 @@
     NSArray *childAry = [self.subTextTitles valueForKey:title];
     NSMutableArray *changeTexts = [NSMutableArray array];
     
-    //直接点击返回 应清除
+    //都未选择 默认全选
     if (rows.count == 0) {
-        return;
+        for (FilterSelectModel *model in childAry) {
+            model.selected = YES;
+            [changeTexts addObject:model];
+        }
     } else {
         //未被点击设为NO
         NSInteger index = 0;
