@@ -51,7 +51,6 @@
     NSString *detailText = [self.allData valueForKey:title];
     if (detailText.length == 0) {
         detailText = @"全部";
-        return cell;
     }
     cell.detailTextLabel.text = detailText;
     
