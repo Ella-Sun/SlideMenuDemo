@@ -48,16 +48,23 @@
 - (void)setData:(NSArray *)data {
     _data = data;
     
+    //初始化_selectedRows
+    NSInteger index = 0;
     //检验全选与否
     BOOL isAllSelected = data.count==0?NO:YES;
-    for (NSArray *model in data) {
-        BOOL isSelected = [model[1] boolValue];
-        if (!isSelected) {
+    for (NSArray *childAry in data) {
+        BOOL isSelected = [childAry[1] boolValue];
+        NSString *indexStr = [NSString stringWithFormat:@"%ld",index];
+        if (isSelected) {
+            [self.selectedRows addObject:indexStr];
+        } else {
             isAllSelected = NO;
         }
+        index++;
     }
     //初始化全选按钮状态
     sectionClose[0] = isAllSelected;
+    
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -108,13 +115,14 @@
     leftLabel.text = titleText;
     rightBtn.selected = isSelected;
     NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
-    if (rightBtn.selected) {
-        if (![self.selectedRows containsObject:indexStr]) {
-            [self.selectedRows addObject:indexStr];
-        }
-    } else {
-        [self.selectedRows removeObject:indexStr];
-    }
+//    if (rightBtn.selected) {
+//        if (![self.selectedRows containsObject:indexStr]) {
+//            [self.selectedRows addObject:indexStr];
+//        }
+//    } else {
+//        [self.selectedRows removeObject:indexStr];
+//    }
+//    NSLog(@"%ld",self.selectedRows.count);
     __weak typeof(self) weakSelf = self;
     cell.cellClickBlock = ^{
         
