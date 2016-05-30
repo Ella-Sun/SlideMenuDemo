@@ -27,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C374A751CFBE51400AE6962 /* YZFilterMenuHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZFilterMenuHeader.pch; sourceTree = "<group>"; };
 		5C3843F21CF4079E0013AD8C /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
 		5C3843F41CF4090E0013AD8C /* icon_arrow_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_default@2x.png"; sourceTree = "<group>"; };
 		5C406A021CF2F01500904E83 /* FilterMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterMenuView.h; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 				5CF721541CEDCBCE0048D479 /* AppDelegate.m */,
 				5CF721561CEDCBCE0048D479 /* ViewController.h */,
 				5CF721571CEDCBCE0048D479 /* ViewController.m */,
+				5C374A751CFBE51400AE6962 /* YZFilterMenuHeader.pch */,
 				5CF721591CEDCBCE0048D479 /* Main.storyboard */,
 				5CF7215C1CEDCBCE0048D479 /* Assets.xcassets */,
 				5CF7215E1CEDCBCE0048D479 /* LaunchScreen.storyboard */,
@@ -353,6 +355,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/YZFilterMenu/YZFilterMenuHeader.pch";
 				INFOPLIST_FILE = YZFilterMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sh.YZFilterMenu;
@@ -364,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/YZFilterMenu/YZFilterMenuHeader.pch";
 				INFOPLIST_FILE = YZFilterMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sh.YZFilterMenu;

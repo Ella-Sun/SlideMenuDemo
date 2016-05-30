@@ -12,12 +12,6 @@
 #import "FilterSelectModel.h"
 #import "FilterMenuView.h"
 
-#define kMenuLeftSpace 100
-//屏幕高度
-#define kScreenHeight CGRectGetHeight([UIScreen mainScreen].bounds)
-//屏幕宽
-#define kScreenWidth CGRectGetWidth([UIScreen mainScreen].bounds)
-
 @interface FilterMenuViewController ()<UITableViewDelegate,FilterSelectedDelegate>
 
 @property (nonatomic, strong) FilterMenuView *filterMenu;

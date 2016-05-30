@@ -23,9 +23,21 @@
  */
 @property (nonatomic, strong) NSMutableArray * allSelBtns;
 
+/**
+ *  记录行高
+ */
+@property (nonatomic, strong) NSMutableArray * tempCellHeight;
+
 @end
 
 @implementation FilterSubView
+
+- (NSMutableArray *)tempCellHeight {
+    if (!_tempCellHeight) {
+        _tempCellHeight = [NSMutableArray array];
+    }
+    return _tempCellHeight;
+}
 
 - (NSMutableArray *)allSelBtns {
     if (!_allSelBtns) {
@@ -108,21 +120,13 @@
     UILabel *leftLabel = [cell viewWithTag:310];
     UIButton *rightBtn = [cell viewWithTag:311];
     
-    NSString *titleText = self.data[indexPath.row][0];
-    NSNumber *selectedNumber = self.data[indexPath.row][1];
+    NSString *titleText = _data[indexPath.row][0];
+    NSNumber *selectedNumber = _data[indexPath.row][1];
     BOOL isSelected = [selectedNumber boolValue];
     
     leftLabel.text = titleText;
     rightBtn.selected = isSelected;
     NSString *indexStr = [NSString stringWithFormat:@"%ld",indexPath.row];
-//    if (rightBtn.selected) {
-//        if (![self.selectedRows containsObject:indexStr]) {
-//            [self.selectedRows addObject:indexStr];
-//        }
-//    } else {
-//        [self.selectedRows removeObject:indexStr];
-//    }
-//    NSLog(@"%ld",self.selectedRows.count);
     __weak typeof(self) weakSelf = self;
     cell.cellClickBlock = ^{
         
@@ -136,15 +140,15 @@
         }
         
         //改变data内的记录数据——>折叠时记录状态
-        NSArray *valueAry = self.data[indexPath.row];
+        NSArray *valueAry = _data[indexPath.row];
         NSMutableArray *newValueAry = [NSMutableArray arrayWithArray:valueAry];
         [newValueAry replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:rightBtn.selected]];
-        NSMutableArray *newData = [NSMutableArray arrayWithArray:self.data];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:_data];
         [newData replaceObjectAtIndex:indexPath.row withObject:newValueAry];
-        self.data = newData;
+        _data = newData;
         
         //改变全选按钮的状态
-        BOOL isSelectedAll = (weakSelf.data.count == weakSelf.selectedRows.count)?YES:NO;
+        BOOL isSelectedAll = (_data.count == weakSelf.selectedRows.count)?YES:NO;
         UIButton *leftBtn = (UIButton *)weakSelf.allSelBtns[indexPath.section];
         leftBtn.selected = isSelectedAll;
         sectionClose[indexPath.section] = isSelectedAll;
@@ -164,6 +168,9 @@
     labelFrame.size.height = labelSize.height;
     labelFrame.origin.y = ((labelSize.height + 20) - leftLabel.frame.size.height) * 0.5;
     leftLabel.frame = labelFrame;
+    
+    CGFloat marginSpace = 8;
+    [self.tempCellHeight addObject:[NSString stringWithFormat:@"%f",(labelSize.height + marginSpace*2)]];
     
     return cell;
 }
@@ -237,8 +244,20 @@
     return 44;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10.0f;
+/**
+ *  动态计算cell的高度
+ *
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CGFloat cellHeight = 44;
+    if (indexPath.row < self.tempCellHeight.count) {
+        cellHeight = [self.tempCellHeight[indexPath.row] floatValue];
+        if (cellHeight < 35) {
+            cellHeight = 40;
+        }
+    }
+    return cellHeight;
 }
 
 /**
@@ -255,8 +274,8 @@
     
     //改变所有cell按钮的选择状态
     NSInteger index = 0;
-    NSMutableArray *newData = [NSMutableArray arrayWithArray:self.data];
-    for (NSArray *valueAry in self.data) {
+    NSMutableArray *newData = [NSMutableArray arrayWithArray:_data];
+    for (NSArray *valueAry in _data) {
         NSMutableArray *newModel = [NSMutableArray arrayWithArray:valueAry];
         NSNumber *selectNumber = [NSNumber numberWithBool:sender.selected];
         [newModel replaceObjectAtIndex:1 withObject:selectNumber];
@@ -269,7 +288,7 @@
         index++;
     }
 //    NSLog(@"%ld",self.selectedRows.count);
-    self.data = newData;
+    _data = newData;
     [self.subTableView reloadData];
 }
 

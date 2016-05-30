@@ -1,0 +1,21 @@
+//
+//  YZFilterMenuHeader.pch
+//  YZFilterMenu
+//
+//  Created by IOS-Sun on 16/5/30.
+//  Copyright © 2016年 Sunhong. All rights reserved.
+//
+
+#ifndef YZFilterMenuHeader_pch
+#define YZFilterMenuHeader_pch
+
+#define kMenuLeftSpace 100
+//屏幕高度
+#define kScreenHeight CGRectGetHeight([UIScreen mainScreen].bounds)
+//屏幕宽
+#define kScreenWidth CGRectGetWidth([UIScreen mainScreen].bounds)
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* YZFilterMenuHeader_pch */
