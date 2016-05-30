@@ -160,6 +160,20 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CGFloat cellHeight = 44;
+    if (indexPath.row < _data.count) {
+        NSString *tempCellHeight = _data[indexPath.row][2];
+        cellHeight = [tempCellHeight floatValue];
+        if (cellHeight < 35) {
+            cellHeight = 44;
+        }
+    }
+    
+    return cellHeight;
+}
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
@@ -225,7 +239,7 @@
 
 //设置组的头视图的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat tempHeight = 44;
+    CGFloat tempHeight = 40;
     if (iPhone5 || APP_SCREEN_THREEPOINTFIVE) {
         tempHeight = 35;
     }

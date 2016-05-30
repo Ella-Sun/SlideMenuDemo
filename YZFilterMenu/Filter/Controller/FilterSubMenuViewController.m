@@ -69,11 +69,14 @@
 
 - (void)setData:(NSArray *)data {
     _data = data;
+    
     NSMutableArray *tableData = [NSMutableArray array];
     for (FilterSelectModel *model in _data) {
         NSMutableArray *indexData = [NSMutableArray array];
         [indexData addObject:model.title];
         [indexData addObject:[NSNumber numberWithBool:model.selected]];
+        CGFloat cellHeight = [self cellHeightWithText:model.title];
+        [indexData addObject:[NSString stringWithFormat:@"%f",cellHeight]];
         [tableData addObject:indexData];
     }
     
@@ -81,6 +84,22 @@
         self.subSelectView.subTitle = self.subTitle;
         self.subSelectView.data = tableData;
     }
+}
+
+- (CGFloat)cellHeightWithText:(NSString *)text {
+    
+    CGFloat labelWidth = (kScreenWidth - kMenuLeftSpace)*0.8;
+    CGFloat marginSpace = 8;
+    
+    UIFont *labelFont = [UIFont systemFontOfSize:14.0];
+    NSDictionary *attributes = @{NSFontAttributeName:labelFont};
+    CGSize constraintSize = CGSizeMake(labelWidth, MAXFLOAT);
+    CGSize labelSize = [text boundingRectWithSize:constraintSize
+                                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                 attributes:attributes
+                                                    context:nil].size;
+    CGFloat cellHeight = labelSize.height + marginSpace*2;
+    return cellHeight;
 }
 
 @end
