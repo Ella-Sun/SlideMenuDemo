@@ -23,21 +23,9 @@
  */
 @property (nonatomic, strong) NSMutableArray * allSelBtns;
 
-/**
- *  记录行高
- */
-@property (nonatomic, strong) NSMutableArray * tempCellHeight;
-
 @end
 
 @implementation FilterSubView
-
-- (NSMutableArray *)tempCellHeight {
-    if (!_tempCellHeight) {
-        _tempCellHeight = [NSMutableArray array];
-    }
-    return _tempCellHeight;
-}
 
 - (NSMutableArray *)allSelBtns {
     if (!_allSelBtns) {
@@ -169,9 +157,6 @@
     labelFrame.origin.y = ((labelSize.height + 20) - leftLabel.frame.size.height) * 0.5;
     leftLabel.frame = labelFrame;
     
-    CGFloat marginSpace = 8;
-    [self.tempCellHeight addObject:[NSString stringWithFormat:@"%f",(labelSize.height + marginSpace*2)]];
-    
     return cell;
 }
 
@@ -240,24 +225,11 @@
 
 //设置组的头视图的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
-    return 44;
-}
-
-/**
- *  动态计算cell的高度
- *
- */
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    CGFloat cellHeight = 44;
-    if (indexPath.row < self.tempCellHeight.count) {
-        cellHeight = [self.tempCellHeight[indexPath.row] floatValue];
-        if (cellHeight < 35) {
-            cellHeight = 40;
-        }
+    CGFloat tempHeight = 44;
+    if (iPhone5 || APP_SCREEN_THREEPOINTFIVE) {
+        tempHeight = 35;
     }
-    return cellHeight;
+    return tempHeight;
 }
 
 /**

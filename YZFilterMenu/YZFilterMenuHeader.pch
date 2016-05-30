@@ -15,7 +15,11 @@
 //屏幕宽
 #define kScreenWidth CGRectGetWidth([UIScreen mainScreen].bounds)
 
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+// iphone5的适配
+#define iPhone5  ([UIScreen instancesRespondToSelector:@selector(currentMode)]?CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size):NO)
+//  3.5寸屏幕  ipone4,4s
+#define APP_SCREEN_THREEPOINTFIVE (kScreenHeight/kScreenWidth==1.5?YES:NO)
+//  4.7寸屏幕  ipone6,6s
+#define iPhone6 ([UIScreen mainScreen].bounds.size.height == 667) ? YES : NO
 
 #endif /* YZFilterMenuHeader_pch */
