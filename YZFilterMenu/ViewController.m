@@ -42,7 +42,7 @@
     window.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.7];
     window.windowLevel = UIWindowLevelNormal;
     window.hidden = NO;
-    [window makeKeyAndVisible];
+//    [window makeKeyAndVisible];
     
     FilterMenuViewController *filterVC = [[FilterMenuViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:filterVC];
@@ -50,10 +50,13 @@
     window.rootViewController = nav;
     self.window = window;
     
+    [self addSwipGestureWithClass:filterVC.view Method:@selector(handleSwipFrom:)];
+    
     UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [view addGestureRecognizer:tap];
+    
+    [self addTapGestureWithClass:view Method:@selector(tapAction)];
+    
     [self.view addSubview:view];
     self.upView = view;
     
@@ -66,6 +69,7 @@
                          self.window.frame = winFrame;
                      } completion:nil];
     
+    //这些需要写在调用筛选框的viewController中
     __weak typeof(self) weak = self;
     filterVC.RecordSelectTexts = ^(NSDictionary *recordTexts){
         weak.recordFilter = recordTexts;
@@ -97,7 +101,47 @@
 }
 
 
+/**
+ *  添加轻扫手势
+ *
+ */
+- (void)addSwipGestureWithClass:(UIView *)view
+                         Method:(SEL)method {
+    
+    UISwipeGestureRecognizer *swipRecognizer = [[UISwipeGestureRecognizer alloc]
+                                                initWithTarget:self
+                                                action:method];
+    swipRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [view addGestureRecognizer:swipRecognizer];
+}
+
+/**
+ *  添加点击手势
+ *
+ */
+- (void)addTapGestureWithClass:(UIView *)view
+                        Method:(SEL)method {
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc]
+                                    initWithTarget:self
+                                    action:method];
+    [view addGestureRecognizer:tap];
+}
+
+//判断清扫手势方向
+- (void)handleSwipFrom:(UISwipeGestureRecognizer *)swipRecognizer {
+    
+    if (swipRecognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self tapAction];
+    }
+}
+
+
+/**
+ *  筛选框向右消失
+ */
 - (void)tapSureFilterButton {
+    
     [UIView animateWithDuration:0.5
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -116,19 +160,14 @@
                      }];
 }
 
+//没有点击确定按钮 都走这个方法
 - (void)tapAction{
-    self.tradeIds = nil;
-    self.companyIds = nil;
-    self.bankIds = nil;
-    self.propertyIds = nil;
-    self.modelIds = nil;
-    
-    self.recordFilter = nil;
     
     [self tapSureFilterButton];
     
-    //清除标记
-    
 }
+
+
+
 
 @end

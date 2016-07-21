@@ -11,7 +11,6 @@
 		44FBCDCD1D225DE300D9EEC0 /* checkbox_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44FBCDC91D225DE300D9EEC0 /* checkbox_selected@2x.png */; };
 		44FBCDCE1D225DE300D9EEC0 /* icon_arrow_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44FBCDCA1D225DE300D9EEC0 /* icon_arrow_default@2x.png */; };
 		44FBCDCF1D225DE300D9EEC0 /* icon_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44FBCDCB1D225DE300D9EEC0 /* icon_back@2x.png */; };
-		44FBCDD21D22625E00D9EEC0 /* UIResponder+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 44FBCDD11D22625E00D9EEC0 /* UIResponder+Router.m */; };
 		5C406A041CF2F01500904E83 /* FilterMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C406A031CF2F01500904E83 /* FilterMenuView.m */; };
 		5CF721521CEDCBCE0048D479 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721511CEDCBCE0048D479 /* main.m */; };
 		5CF721551CEDCBCE0048D479 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF721541CEDCBCE0048D479 /* AppDelegate.m */; };
@@ -32,8 +31,6 @@
 		44FBCDC91D225DE300D9EEC0 /* checkbox_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_selected@2x.png"; sourceTree = "<group>"; };
 		44FBCDCA1D225DE300D9EEC0 /* icon_arrow_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_default@2x.png"; sourceTree = "<group>"; };
 		44FBCDCB1D225DE300D9EEC0 /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
-		44FBCDD01D22625E00D9EEC0 /* UIResponder+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+Router.h"; sourceTree = "<group>"; };
-		44FBCDD11D22625E00D9EEC0 /* UIResponder+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+Router.m"; sourceTree = "<group>"; };
 		5C374A751CFBE51400AE6962 /* YZFilterMenuHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZFilterMenuHeader.pch; sourceTree = "<group>"; };
 		5C406A021CF2F01500904E83 /* FilterMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterMenuView.h; sourceTree = "<group>"; };
 		5C406A031CF2F01500904E83 /* FilterMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterMenuView.m; sourceTree = "<group>"; };
@@ -132,8 +129,6 @@
 				5CF7216A1CEDCC8B0048D479 /* Controller */,
 				5CF721711CEDCC8B0048D479 /* Model */,
 				5CF721741CEDCC8B0048D479 /* View */,
-				44FBCDD01D22625E00D9EEC0 /* UIResponder+Router.h */,
-				44FBCDD11D22625E00D9EEC0 /* UIResponder+Router.m */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -256,7 +251,6 @@
 				5CF7217B1CEDCC8B0048D479 /* FilterBaseViewController.m in Sources */,
 				5C406A041CF2F01500904E83 /* FilterMenuView.m in Sources */,
 				5CF721551CEDCBCE0048D479 /* AppDelegate.m in Sources */,
-				44FBCDD21D22625E00D9EEC0 /* UIResponder+Router.m in Sources */,
 				5CF721521CEDCBCE0048D479 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
